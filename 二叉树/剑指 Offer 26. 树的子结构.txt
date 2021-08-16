@@ -1,0 +1,36 @@
+class Solution {
+    public boolean isSubStructure(TreeNode A, TreeNode B) {
+        if(A==null||B==null)
+        {
+            return false;
+        } 
+        if(A.val==B.val&&isSame(A.left,B.left)&&isSame(A.right,B.right))
+        {
+            return true;
+        } 
+        return isSubStructure(A.left,B)||isSubStructure(A.right,B);
+    }
+    public boolean isSame(TreeNode A,TreeNode B) {
+        if(B==null){
+            return true;//B已经被遍历完了，返回True
+        } 
+        if(A==null){
+            return false;////B没有被遍历完了的情况下A确遍历完了，此时返回false
+        }
+        //当A,B都没有遍历结束时，但此时A结点的值与B结点的值不相等即A.val!=B.val，则配对失败返回false
+        if(A.val!=B.val){
+            return false;
+        }else{
+            /*
+            当A,B都没有遍历结束时，而且A结点的值与B结点的值相等即A.val==B.val，此时的该结点在两树中配对成功，那接下来递归判断该两树此结点的左右结点是否还能够匹配成功.
+        boolean left=isSame(A.left,B.left);
+        boolean right=isSame(A.left,B.left);
+        return left&&right;
+        上边代码等同于下面的代码
+        */
+        return isSame(A.left,B.left)&&isSame(A.right,B.right);
+        } 
+    }
+
+
+}
