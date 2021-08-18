@@ -1,0 +1,36 @@
+ 回溯算法，DFS
+一个图搜索的题目，只不过这道题的起始原点只有一个，我们只要从这个点进行DFS。需要注意的是，图的DFS需要自己判断元素是否被访问过，因此我们需要设定一个辅助数组，标记被访问过的元素，避免重复访问。
+
+递归终止条件：数组下标越界，或者元素被访问过，或者坐标位数和大于k, 直接返回0，表示该元素无效或者不能到达。
+每次都返回 当前位置数(1) + 相邻方向上的可达位置数。
+class Solution {
+    int count=0;
+    public int movingCount(int m, int n, int k) {
+        boolean[][] visited = new boolean[m][n];
+        movingCount(0,0,m,n,k,visited);
+        return count;
+    }
+      // i：x轴坐标，j：y轴坐标  m：x轴边界   n：y轴边界
+     public void movingCount(int i, int j,int m,int n, int k, boolean[][] visited) {
+         // 如果下标越界,该当前位置元素已经被访问过或者数位和大于k，则返回 0，结束递归
+         if(i<0||i>=m||j<0||j>=n||k<getSum(i)+getSum(j)||visited[i][j]){//递归结束条件
+            return;
+         }
+       // 如果满足条件，则将标记位设置为 true，count记录满足的个数
+        count++; //递归中的单层逻辑
+        visited[i][j]=true; //递归中的单层逻辑
+        movingCount(i+1,j,m,n,k,visited);//递归上，下，左，右
+        movingCount(i-1,j,m,n,k,visited);
+        movingCount(i,j+1,m,n,k,visited);
+        movingCount(i,j-1,m,n,k,visited);
+    }
+     public int getSum(int x) {//计算
+        int sum=0;
+        while(x>0){
+            sum+=x%10;
+            x=x/10;
+        }
+        return sum;
+    }
+     
+}
